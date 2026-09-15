@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>TASKA</title>
+
+  <!-- Telegram Mini App -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      background: #0b0d10;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px 18px 100px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffffff, #777777);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+      font-weight: 800;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #8e949e;
+      font-size: 15px;
+    }
+
+    .main-card {
+      background: linear-gradient(145deg, #191d23, #111419);
+      border: 1px solid #292e36;
+      border-radius: 24px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .main-card h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .main-card p {
+      color: #949aa4;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0 0 18px;
+    }
+
+    .ai-button {
+      width: 100%;
+      border: none;
+      border-radius: 15px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      background: #ffffff;
+      color: #111111;
+      cursor: pointer;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 25px 0 14px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .action {
+      background: #15181d;
+      border: 1px solid #292e36;
+      border-radius: 19px;
+      padding: 20px 15px;
+      min-height: 125px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .action:active {
+      transform: scale(0.97);
+    }
+
+    .icon {
+      font-size: 27px;
+      margin-bottom: 13px;
+    }
+
+    .action-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .action-text {
+      color: #858b95;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .categories {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category {
+      flex-shrink: 0;
+      background: #15181d;
+      border: 1px solid #292e36;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-size: 13px;
+      color: #d9dce1;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(600px, 100%);
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(11, 13, 16, 0.94);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid #252930;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      z-index: 10;
+    }
+
+    .nav-item {
+      border: none;
+      background: none;
+      color: #777d87;
+      font-size: 11px;
+      padding: 7px 0;
+      cursor: pointer;
+    }
+
+    .nav-icon {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .nav-item.active {
+      color: #ffffff;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 90px;
+      transform: translateX(-50%) translateY(20px);
+      background: #ffffff;
+      color: #111111;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s;
+      z-index: 20;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <header class="header">
+      <div class="logo">TASKA</div>
+      <div class="avatar" id="avatar">T</div>
+    </header>
+
+    <section class="welcome">
+      <h1>Что будем делать?</h1>
+      <p>Найди исполнителя или создай свой заказ.</p>
+    </section>
+
+    <section class="main-card">
+      <h2>🤖 TASKA AI</h2>
+      <p>
+        Опиши задачу обычными словами — TASKA поможет
+        сформировать понятное техническое задание
+        и подобрать подходящих исполнителей.
+      </p>
+
+      <button class="ai-button" onclick="createOrder()">
+        Создать заказ с AI
+      </button>
+    </section>
+
+    <div class="section-title">Что вам нужно?</div>
+
+    <div class="actions">
+
+      <div class="action" onclick="findExecutor()">
+        <div class="icon">🔎</div>
+        <div class="action-title">Найти исполнителя</div>
+        <div class="action-text">
+          Дизайнеры, SMM, разработчики и другие специалисты.
+        </div>
+      </div>
+
+      <div class="action" onclick="createOrder()">
+        <div class="icon">➕</div>
+        <div class="action-title">Создать заказ</div>
+        <div class="action-text">
+          Опиши задачу и получи предложения специалистов.
+        </div>
+      </div>
+
+      <div class="action" onclick="showMessage('Раздел заказов скоро будет доступен')">
+        <div class="icon">📦</div>
+        <div class="action-title">Мои заказы</div>
+        <div class="action-text">
+          Все активные и завершённые заказы в одном месте.
+        </div>
+      </div>
+
+      <div class="action" onclick="showMessage('Профиль скоро будет доступен')">
+        <div class="icon">👤</div>
+        <div class="action-title">Профиль</div>
+        <div class="action-text">
+          Рейтинг, отзывы, история и настройки аккаунта.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-title">Популярные услуги</div>
+
+    <div class="categories">
+      <div class="category">🎨 Дизайн</div>
+      <div class="category">📱 SMM</div>
+      <div class="category">🎬 Видео</div>
+      <div class="category">🤖 AI</div>
+      <div class="category">💻 Разработка</div>
+      <div class="category">✍️ Тексты</div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+
+    <button class="nav-item active" onclick="setActive(this)">
+      <span class="nav-icon">⌂</span>
+      Главная
+    </button>
+
+    <button class="nav-item" onclick="showMessage('Заказы')">
+      <span class="nav-icon">📦</span>
+      Заказы
+    </button>
+
+    <button class="nav-item" onclick="showMessage('Сообщения')">
+      <span class="nav-icon">💬</span>
+      Чаты
+    </button>
+
+    <button class="nav-item" onclick="showMessage('Профиль')">
+      <span class="nav-icon">👤</span>
+      Профиль
+    </button>
+
+  </nav>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+
+    // Telegram Mini App
+    const tg = window.Telegram?.WebApp;
+
+    if (tg) {
+      tg.ready();
+      tg.expand();
+
+      const user = tg.initDataUnsafe?.user;
+
+      if (user) {
+        const firstLetter = (user.first_name || "T").charAt(0);
+        document.getElementById("avatar").textContent = firstLetter;
+      }
+    }
+
+    function showMessage(text) {
+      const toast = document.getElementById("toast");
+
+      toast.textContent = text;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    }
+
+    function createOrder() {
+      showMessage("Создание заказа подключим следующим шагом");
+    }
+
+    function findExecutor() {
+      showMessage("Поиск исполнителя подключим следующим шагом");
+    }
+
+    function setActive(button) {
+      document.querySelectorAll(".nav-item")
+        .forEach(item => item.classList.remove("active"));
+
+      button.classList.add("active");
+    }
+
+  </script>
+
+</body>
+</html>
