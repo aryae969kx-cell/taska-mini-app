@@ -15,56 +15,52 @@
 
 body {
     margin: 0;
-    background: #080b10;
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #080b12;
+    color: #ffffff;
 }
 
 button, input, textarea, select {
-    font-family: inherit;
+    font: inherit;
 }
 
 .app {
+    max-width: 600px;
+    margin: auto;
     min-height: 100vh;
     padding-bottom: 90px;
 }
 
 .header {
-    padding: 24px 20px 10px;
+    padding: 22px 20px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 15px;
-    background: linear-gradient(145deg, #17202d, #080b10);
-    border: 1px solid #334152;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 25px;
     font-weight: 900;
-    font-size: 15px;
-    color: #45a8ff;
-}
-
-.logo-text {
-    font-size: 24px;
-    font-weight: 800;
     letter-spacing: 1px;
 }
 
-.container {
-    padding: 10px 18px;
+.logo span {
+    color: #5b8cff;
+}
+
+.user-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #171d2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .screen {
     display: none;
+    padding: 10px 18px 25px;
 }
 
 .screen.active {
@@ -72,243 +68,271 @@ button, input, textarea, select {
 }
 
 .hero {
-    margin-top: 15px;
-    padding: 22px;
+    margin-top: 10px;
+    padding: 25px 20px;
     border-radius: 24px;
-    background: linear-gradient(135deg, #111b28, #0d1118);
-    border: 1px solid #1f2b39;
+    background: linear-gradient(145deg, #111827, #0c111c);
+    border: 1px solid #1c2638;
 }
 
 .hero h1 {
-    margin: 0 0 8px;
-    font-size: 27px;
+    margin: 0 0 10px;
+    font-size: 28px;
 }
 
 .hero p {
     margin: 0;
-    color: #9aa8b8;
+    color: #8d98aa;
     line-height: 1.5;
 }
 
 .ai-card {
-    margin-top: 16px;
+    margin-top: 18px;
     padding: 18px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #18283b, #101721);
-    border: 1px solid #28415c;
+    background: #101622;
+    border: 1px solid #202b3e;
 }
 
 .ai-title {
-    font-weight: 800;
-    font-size: 18px;
-    margin-bottom: 7px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-weight: 700;
 }
 
-.ai-text {
-    color: #9eacba;
+.ai-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #172442;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.ai-card p {
+    color: #8d98aa;
     font-size: 14px;
-    line-height: 1.45;
+    line-height: 1.5;
+    margin: 12px 0 0;
 }
 
 .primary {
     width: 100%;
     border: 0;
+    padding: 16px;
     border-radius: 16px;
-    padding: 17px;
-    margin-top: 14px;
-    background: #2995e8;
+    background: #5b8cff;
     color: white;
+    font-weight: 700;
     font-size: 16px;
-    font-weight: 750;
+    margin-top: 15px;
 }
 
 .secondary {
     width: 100%;
-    border: 1px solid #273544;
+    border: 1px solid #263247;
+    padding: 15px;
     border-radius: 16px;
-    padding: 16px;
-    margin-top: 10px;
-    background: #111821;
+    background: #111722;
     color: white;
-    font-size: 16px;
-    font-weight: 650;
+    font-weight: 600;
+    margin-top: 10px;
 }
 
 .section-title {
-    margin: 25px 0 13px;
-    font-size: 19px;
+    margin: 25px 0 12px;
+    font-size: 18px;
     font-weight: 800;
 }
 
 .categories {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
 .category {
-    padding: 18px 14px;
-    border-radius: 18px;
-    background: #10161e;
-    border: 1px solid #202b37;
+    padding: 16px;
+    border-radius: 16px;
+    background: #111722;
+    border: 1px solid #1e293b;
     color: white;
     text-align: left;
 }
 
-.category-icon {
-    font-size: 25px;
-    margin-bottom: 9px;
-}
-
-.category-name {
-    font-weight: 700;
+.category small {
+    display: block;
+    color: #778399;
+    margin-top: 5px;
 }
 
 .form-title {
     font-size: 26px;
     font-weight: 800;
-    margin: 15px 0 8px;
+    margin: 10px 0 7px;
 }
 
 .form-subtitle {
-    color: #8e9baa;
-    line-height: 1.45;
+    color: #7e899b;
     margin-bottom: 22px;
 }
 
-.field {
-    margin-bottom: 17px;
-}
-
-.label {
+label {
     display: block;
-    margin-bottom: 8px;
+    color: #a8b2c2;
     font-size: 14px;
-    font-weight: 700;
-    color: #cbd4de;
+    margin: 16px 0 7px;
 }
 
-.input,
-.textarea,
-.select {
+input, textarea, select {
     width: 100%;
-    border: 1px solid #283543;
-    background: #10161e;
+    background: #111722;
     color: white;
+    border: 1px solid #253044;
     border-radius: 14px;
     padding: 15px;
-    font-size: 16px;
     outline: none;
 }
 
-.textarea {
-    min-height: 120px;
-    resize: vertical;
+textarea {
+    min-height: 125px;
+    resize: none;
 }
 
-.input:focus,
-.textarea:focus,
-.select:focus {
-    border-color: #2995e8;
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #5b8cff;
 }
 
-.hint {
-    margin-top: 7px;
-    color: #718091;
-    font-size: 12px;
+.ai-result {
+    background: linear-gradient(145deg, #111a2b, #0d131e);
+    border: 1px solid #263b5f;
+    border-radius: 22px;
+    padding: 20px;
+    margin-top: 18px;
 }
 
-.order-summary {
-    padding: 17px;
-    border-radius: 18px;
-    background: #10161e;
-    border: 1px solid #273442;
-    margin-top: 20px;
-}
-
-.summary-row {
+.ai-result-header {
     display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 8px 0;
-    color: #9eacba;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
-.summary-row strong {
-    color: white;
-    text-align: right;
+.ai-result-icon {
+    width: 44px;
+    height: 44px;
+    background: #172a4c;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
 }
 
-.back {
-    border: 0;
-    background: transparent;
-    color: #8ebfe8;
+.ai-result-header strong {
+    display: block;
+}
+
+.ai-result-header span {
+    color: #6f9cff;
+    font-size: 13px;
+}
+
+.tz-row {
+    padding: 13px 0;
+    border-bottom: 1px solid #202c40;
+}
+
+.tz-row:last-child {
+    border-bottom: none;
+}
+
+.tz-label {
+    color: #718096;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.tz-value {
     font-size: 15px;
-    padding: 5px 0 15px;
+    line-height: 1.45;
 }
 
-.empty {
+.success {
+    color: #64d98b;
+}
+
+.orders-empty {
     text-align: center;
-    padding: 55px 20px;
-    color: #8794a3;
+    padding: 70px 20px;
+    color: #778399;
 }
 
-.empty-icon {
+.orders-empty .big {
     font-size: 45px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 .bottom-nav {
     position: fixed;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    height: 68px;
-    border-radius: 22px;
-    background: rgba(18, 25, 34, .96);
-    border: 1px solid #293645;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: min(600px, 100%);
+    background: rgba(10, 14, 22, 0.96);
+    border-top: 1px solid #1b2433;
     display: flex;
-    align-items: center;
     justify-content: space-around;
-    z-index: 100;
+    padding: 10px 5px 14px;
     backdrop-filter: blur(15px);
+    z-index: 20;
 }
 
-.nav-item {
-    background: transparent;
+.nav-btn {
     border: 0;
-    color: #718091;
+    background: transparent;
+    color: #657084;
     font-size: 11px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-btn.active {
+    color: #6f9cff;
 }
 
 .nav-icon {
-    display: block;
     font-size: 21px;
-    margin-bottom: 3px;
-}
-
-.nav-item.active {
-    color: #42a5f5;
 }
 
 .toast {
     position: fixed;
-    left: 20px;
-    right: 20px;
-    bottom: 95px;
-    padding: 15px;
-    border-radius: 15px;
-    background: #202a35;
-    border: 1px solid #354453;
+    left: 50%;
+    bottom: 90px;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a2230;
+    border: 1px solid #2b3950;
+    padding: 13px 18px;
+    border-radius: 14px;
     color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    z-index: 100;
+    max-width: 90%;
     text-align: center;
-    z-index: 200;
-    display: none;
 }
 
 .toast.show {
-    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 </style>
 </head>
@@ -318,250 +342,259 @@ button, input, textarea, select {
 <div class="app">
 
 <header class="header">
-    <div class="logo">
-        <div class="logo-icon">T</div>
-        <div class="logo-text">TASKA</div>
-    </div>
+    <div class="logo">TAS<span>KA</span></div>
+    <div class="user-icon">👤</div>
 </header>
 
-<div class="container">
-
-<!-- ГЛАВНАЯ -->
+<!-- HOME -->
 <section id="home" class="screen active">
 
     <div class="hero">
         <h1>Добро пожаловать в TASKA</h1>
         <p>
-            Найди исполнителя или создай заказ.
+            Найди специалиста или создай заказ.
             TASKA поможет превратить твою идею в понятное задание.
         </p>
     </div>
 
     <div class="ai-card">
-        <div class="ai-title">🤖 TASKA AI</div>
-        <div class="ai-text">
-            Опиши своими словами, что тебе нужно.
-            Мы поможем сформировать понятное ТЗ для исполнителя.
+        <div class="ai-title">
+            <div class="ai-icon">🤖</div>
+            <div>TASKA AI</div>
         </div>
+
+        <p>
+            Опиши своими словами, что тебе нужно.
+            AI структурирует задачу и поможет найти подходящего исполнителя.
+        </p>
+
+        <button class="primary" onclick="openCreateOrder()">
+            ＋ Создать заказ
+        </button>
+
+        <button class="secondary" onclick="showScreen('orders')">
+            🔎 Найти исполнителя
+        </button>
     </div>
-
-    <button class="primary" onclick="openCreateOrder()">
-        ＋ Создать заказ
-    </button>
-
-    <button class="secondary" onclick="showToast('Поиск исполнителей скоро будет доступен')">
-        🔎 Найти исполнителя
-    </button>
 
     <div class="section-title">Популярные услуги</div>
 
     <div class="categories">
-        <button class="category" onclick="openCreateOrder('Дизайн')">
-            <div class="category-icon">🎨</div>
-            <div class="category-name">Дизайн</div>
+        <button class="category" onclick="openCreateOrder('Design')">
+            🎨 Дизайн
+            <small>Логотипы, баннеры</small>
         </button>
 
         <button class="category" onclick="openCreateOrder('SMM')">
-            <div class="category-icon">📱</div>
-            <div class="category-name">SMM</div>
+            📱 SMM
+            <small>Соцсети, контент</small>
         </button>
 
-        <button class="category" onclick="openCreateOrder('Видео')">
-            <div class="category-icon">🎬</div>
-            <div class="category-name">Видео</div>
+        <button class="category" onclick="openCreateOrder('Video')">
+            🎬 Видео
+            <small>Монтаж, Reels</small>
         </button>
 
         <button class="category" onclick="openCreateOrder('AI')">
-            <div class="category-icon">🤖</div>
-            <div class="category-name">AI</div>
+            🤖 AI
+            <small>Изображения, видео</small>
         </button>
 
-        <button class="category" onclick="openCreateOrder('Разработка')">
-            <div class="category-icon">💻</div>
-            <div class="category-name">Разработка</div>
+        <button class="category" onclick="openCreateOrder('Development')">
+            💻 Разработка
+            <small>Сайты, боты</small>
         </button>
 
-        <button class="category" onclick="openCreateOrder('Тексты')">
-            <div class="category-icon">✍️</div>
-            <div class="category-name">Тексты</div>
+        <button class="category" onclick="openCreateOrder('Texts')">
+            ✍️ Тексты
+            <small>Статьи, копирайтинг</small>
         </button>
     </div>
 
 </section>
 
-
-<!-- СОЗДАНИЕ ЗАКАЗА -->
+<!-- CREATE ORDER -->
 <section id="create" class="screen">
 
-    <button class="back" onclick="showScreen('home')">
-        ← Назад
-    </button>
-
     <div class="form-title">Создать заказ</div>
-
     <div class="form-subtitle">
-        Расскажи, что тебе нужно. Чем подробнее описание,
-        тем точнее TASKA сможет подобрать исполнителя.
+        Расскажи, что тебе нужно — TASKA подготовит ТЗ.
     </div>
 
-    <div class="field">
-        <label class="label">Категория</label>
+    <label>Категория</label>
+    <select id="category">
+        <option value="">Выбери категорию</option>
+        <option>Design</option>
+        <option>SMM</option>
+        <option>Video</option>
+        <option>AI</option>
+        <option>Development</option>
+        <option>Texts</option>
+        <option>Photo</option>
+        <option>Other</option>
+    </select>
 
-        <select id="category" class="select">
-            <option value="">Выбери категорию</option>
-            <option>Дизайн</option>
-            <option>SMM</option>
-            <option>Видео</option>
-            <option>AI</option>
-            <option>Разработка</option>
-            <option>Тексты</option>
-            <option>Фото</option>
-            <option>Другое</option>
-        </select>
-    </div>
+    <label>Название заказа</label>
+    <input id="title" placeholder="Например: Логотип для магазина">
 
-    <div class="field">
-        <label class="label">Что нужно сделать?</label>
+    <label>Что тебе нужно?</label>
+    <textarea id="description"
+        placeholder="Опиши задачу своими словами. Можно без специальных терминов..."></textarea>
 
-        <input
-            id="title"
-            class="input"
-            type="text"
-            placeholder="Например: сделать логотип для магазина"
-        >
-    </div>
+    <label>Бюджет</label>
+    <input id="budget" type="number" placeholder="Например: 5000">
 
-    <div class="field">
-        <label class="label">Описание задачи</label>
-
-        <textarea
-            id="description"
-            class="textarea"
-            placeholder="Опиши своими словами, какой результат ты хочешь получить..."
-        ></textarea>
-
-        <div class="hint">
-            Не умеешь составлять ТЗ? Не проблема — позже TASKA AI сделает это за тебя.
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label">Желаемый бюджет</label>
-
-        <input
-            id="budget"
-            class="input"
-            type="number"
-            inputmode="numeric"
-            placeholder="Например: 5000"
-        >
-
-        <div class="hint">
-            Укажи сумму в рублях
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label">Срок выполнения</label>
-
-        <select id="deadline" class="select">
-            <option value="">Выбери срок</option>
-            <option>1 день</option>
-            <option>2–3 дня</option>
-            <option>До 7 дней</option>
-            <option>До 14 дней</option>
-            <option>Срок не важен</option>
-        </select>
-    </div>
+    <label>Срок</label>
+    <select id="deadline">
+        <option value="">Выбери срок</option>
+        <option>До 1 дня</option>
+        <option>До 3 дней</option>
+        <option>До 7 дней</option>
+        <option>До 14 дней</option>
+        <option>До 30 дней</option>
+    </select>
 
     <button class="primary" onclick="createOrder()">
-        Продолжить →
+        🤖 Подготовить ТЗ
     </button>
 
 </section>
 
+<!-- AI TZ -->
+<section id="tz" class="screen">
 
-<!-- МОИ ЗАКАЗЫ -->
+    <div class="form-title">Твоё ТЗ готово</div>
+
+    <div class="form-subtitle">
+        TASKA структурировала описание заказа.
+        Проверь данные перед публикацией.
+    </div>
+
+    <div class="ai-result">
+
+        <div class="ai-result-header">
+            <div class="ai-result-icon">🤖</div>
+            <div>
+                <strong>TASKA AI</strong>
+                <span>Техническое задание</span>
+            </div>
+        </div>
+
+        <div class="tz-row">
+            <div class="tz-label">ЗАДАЧА</div>
+            <div class="tz-value" id="tzTask">—</div>
+        </div>
+
+        <div class="tz-row">
+            <div class="tz-label">КАТЕГОРИЯ</div>
+            <div class="tz-value" id="tzCategory">—</div>
+        </div>
+
+        <div class="tz-row">
+            <div class="tz-label">ТРЕБОВАНИЯ</div>
+            <div class="tz-value" id="tzRequirements">—</div>
+        </div>
+
+        <div class="tz-row">
+            <div class="tz-label">БЮДЖЕТ</div>
+            <div class="tz-value" id="tzBudget">—</div>
+        </div>
+
+        <div class="tz-row">
+            <div class="tz-label">СРОК</div>
+            <div class="tz-value" id="tzDeadline">—</div>
+        </div>
+
+        <div class="tz-row">
+            <div class="tz-label">СТАТУС</div>
+            <div class="tz-value success">
+                ✓ ТЗ подготовлено
+            </div>
+        </div>
+
+    </div>
+
+    <button class="primary" onclick="confirmOrder()">
+        ✓ Всё верно
+    </button>
+
+    <button class="secondary" onclick="showScreen('create')">
+        ✏️ Изменить
+    </button>
+
+</section>
+
+<!-- ORDERS -->
 <section id="orders" class="screen">
 
     <div class="form-title">Мои заказы</div>
 
-    <div class="empty">
-        <div class="empty-icon">📋</div>
-        <div>У тебя пока нет заказов</div>
-
-        <button class="primary" onclick="openCreateOrder()">
-            Создать первый заказ
-        </button>
+    <div class="orders-empty">
+        <div class="big">📋</div>
+        <div>Пока здесь нет заказов</div>
     </div>
 
 </section>
 
-
-<!-- ЧАТЫ -->
+<!-- CHATS -->
 <section id="chats" class="screen">
 
     <div class="form-title">Чаты</div>
 
-    <div class="empty">
-        <div class="empty-icon">💬</div>
-        <div>Здесь появятся чаты с исполнителями</div>
+    <div class="orders-empty">
+        <div class="big">💬</div>
+        <div>Здесь появятся ваши чаты</div>
     </div>
 
 </section>
 
-
-<!-- ПРОФИЛЬ -->
+<!-- PROFILE -->
 <section id="profile" class="screen">
 
     <div class="form-title">Профиль</div>
 
     <div class="ai-card">
-        <div class="ai-title" id="userName">Пользователь TASKA</div>
-
-        <div class="ai-text">
-            Клиент · Новый пользователь
+        <div class="ai-title">
+            👤 <span id="profileName">Пользователь TASKA</span>
         </div>
-    </div>
 
-    <button class="secondary" onclick="showToast('Раздел настроек будет добавлен позже')">
-        ⚙️ Настройки
-    </button>
+        <p>
+            Здесь будут профиль, рейтинг, история заказов
+            и настройки аккаунта.
+        </p>
+    </div>
 
 </section>
 
 </div>
 
+<!-- NAVIGATION -->
 
-<!-- НИЖНЕЕ МЕНЮ -->
 <nav class="bottom-nav">
 
-    <button class="nav-item active" onclick="showScreen('home', this)">
-        <span class="nav-icon">⌂</span>
+    <button class="nav-btn active" onclick="showScreen('home', this)">
+        <div class="nav-icon">⌂</div>
         Главная
     </button>
 
-    <button class="nav-item" onclick="showScreen('orders', this)">
-        <span class="nav-icon">📋</span>
+    <button class="nav-btn" onclick="showScreen('orders', this)">
+        <div class="nav-icon">📋</div>
         Заказы
     </button>
 
-    <button class="nav-item" onclick="showScreen('chats', this)">
-        <span class="nav-icon">💬</span>
+    <button class="nav-btn" onclick="showScreen('chats', this)">
+        <div class="nav-icon">💬</div>
         Чаты
     </button>
 
-    <button class="nav-item" onclick="showScreen('profile', this)">
-        <span class="nav-icon">👤</span>
+    <button class="nav-btn" onclick="showScreen('profile', this)">
+        <div class="nav-icon">👤</div>
         Профиль
     </button>
 
 </nav>
 
 <div id="toast" class="toast"></div>
-
-</div>
-
 
 <script>
 
@@ -570,27 +603,30 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
+let currentOrder = {};
 
-function showScreen(id, navButton) {
+function showScreen(id, button) {
 
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
     });
 
-    document.getElementById(id).classList.add('active');
+    const screen = document.getElementById(id);
 
-    if (navButton) {
+    if (screen) {
+        screen.classList.add('active');
+    }
 
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
-        });
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
 
-        navButton.classList.add('active');
+    if (button) {
+        button.classList.add('active');
     }
 
     window.scrollTo(0, 0);
 }
-
 
 function openCreateOrder(category) {
 
@@ -601,55 +637,66 @@ function openCreateOrder(category) {
     }
 }
 
-
 function createOrder() {
 
     const category = document.getElementById('category').value;
     const title = document.getElementById('title').value.trim();
     const description = document.getElementById('description').value.trim();
-    const budget = document.getElementById('budget').value.trim();
+    const budget = document.getElementById('budget').value;
     const deadline = document.getElementById('deadline').value;
 
-    if (!category) {
-        showToast('Выбери категорию');
+    if (!category || !title || !description || !budget || !deadline) {
+        showToast('Заполни все поля');
         return;
     }
 
-    if (!title) {
-        showToast('Напиши, что нужно сделать');
-        return;
-    }
+    currentOrder = {
+        category,
+        title,
+        description,
+        budget,
+        deadline
+    };
 
-    if (!description) {
-        showToast('Добавь описание задачи');
-        return;
-    }
+    generateTZ();
 
-    if (!budget) {
-        showToast('Укажи бюджет');
-        return;
-    }
+    showScreen('tz');
 
-    if (!deadline) {
-        showToast('Выбери срок выполнения');
-        return;
-    }
+    tg.HapticFeedback?.notificationOccurred('success');
+}
 
-    showToast('Заказ подготовлен! Следующим шагом подключим AI и исполнителей.');
+function generateTZ() {
+
+    const order = currentOrder;
+
+    document.getElementById('tzTask').textContent =
+        order.title;
+
+    document.getElementById('tzCategory').textContent =
+        order.category;
+
+    document.getElementById('tzRequirements').textContent =
+        order.description;
+
+    document.getElementById('tzBudget').textContent =
+        Number(order.budget).toLocaleString('ru-RU') + ' ₽';
+
+    document.getElementById('tzDeadline').textContent =
+        order.deadline;
+}
+
+function confirmOrder() {
+
+    showToast('✓ ТЗ подтверждено');
 
     setTimeout(() => {
 
-        document.getElementById('title').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('budget').value = '';
-        document.getElementById('category').value = '';
-        document.getElementById('deadline').value = '';
-
         showScreen('orders');
 
-    }, 1800);
-}
+        showToast('Заказ готов к публикации');
 
+    }, 1000);
+}
 
 function showToast(message) {
 
@@ -663,15 +710,18 @@ function showToast(message) {
     }, 2500);
 }
 
+/* Telegram user */
 
 const user = tg.initDataUnsafe?.user;
 
 if (user) {
 
-    const name = user.first_name || 'Пользователь';
+    const name =
+        user.first_name ||
+        'Пользователь';
 
-    document.getElementById('userName').textContent =
-        name + ' 👋';
+    document.getElementById('profileName').textContent =
+        name;
 }
 
 </script>
