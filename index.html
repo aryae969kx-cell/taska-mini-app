@@ -1,380 +1,796 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TASKA</title>
 
-  <title>TASKA</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- Telegram Mini App -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+body {
+    margin: 0;
+    background: #0b0d10;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", Arial, sans-serif;
+    min-height: 100vh;
+}
 
-    body {
-      margin: 0;
-      background: #0b0d10;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      min-height: 100vh;
-    }
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
 
+button {
+    cursor: pointer;
+}
+
+.app {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 18px 110px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 34px;
+}
+
+.logo {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+
+.avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff, #8c8c8c);
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 1.05;
+    margin: 0 0 10px;
+    letter-spacing: -1.5px;
+}
+
+.subtitle {
+    color: #9297a1;
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 26px;
+}
+
+.card {
+    background: #15191f;
+    border: 1px solid #292f38;
+    border-radius: 26px;
+    padding: 24px;
+    margin-bottom: 18px;
+}
+
+.ai-card {
+    padding: 25px;
+}
+
+.ai-title {
+    font-size: 28px;
+    font-weight: 750;
+    margin-bottom: 12px;
+}
+
+.ai-text {
+    color: #969ba5;
+    font-size: 17px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+}
+
+.primary {
+    width: 100%;
+    border: 0;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #111111;
+    padding: 19px 20px;
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.primary:active {
+    transform: scale(.98);
+}
+
+.secondary {
+    width: 100%;
+    border: 1px solid #343a44;
+    border-radius: 18px;
+    background: #1b2027;
+    color: #fff;
+    padding: 17px;
+    font-weight: 650;
+}
+
+.section-title {
+    font-size: 27px;
+    font-weight: 750;
+    margin: 30px 0 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.option-card {
+    background: #15191f;
+    border: 1px solid #292f38;
+    border-radius: 23px;
+    padding: 22px;
+    min-height: 170px;
+}
+
+.option-icon {
+    font-size: 35px;
+    margin-bottom: 18px;
+}
+
+.option-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.option-text {
+    color: #8e949f;
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #9ba0aa;
+    font-size: 16px;
+    border: 0;
+    background: none;
+    padding: 0;
+    margin-bottom: 22px;
+}
+
+.form-title {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 9px;
+}
+
+.form-subtitle {
+    color: #9096a0;
+    line-height: 1.5;
+    margin-bottom: 26px;
+}
+
+.label {
+    display: block;
+    font-size: 15px;
+    font-weight: 650;
+    margin: 20px 0 9px;
+}
+
+textarea,
+input,
+select {
+    width: 100%;
+    border: 1px solid #303640;
+    background: #15191f;
+    color: #fff;
+    border-radius: 17px;
+    padding: 16px;
+    outline: none;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+input,
+select {
+    height: 55px;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    border-color: #ffffff;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.ai-loading {
+    text-align: center;
+    padding: 35px 10px;
+}
+
+.robot {
+    font-size: 50px;
+    margin-bottom: 14px;
+}
+
+.loading-title {
+    font-size: 23px;
+    font-weight: 750;
+}
+
+.loading-text {
+    color: #9096a0;
+    margin-top: 8px;
+}
+
+.result-title {
+    font-size: 31px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.result-subtitle {
+    color: #9298a2;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.spec {
+    border-top: 1px solid #2c323b;
+}
+
+.spec-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #2c323b;
+}
+
+.spec-name {
+    color: #8f96a0;
+}
+
+.spec-value {
+    text-align: right;
+    font-weight: 650;
+}
+
+.success {
+    background: #15191f;
+    border: 1px solid #303640;
+    border-radius: 22px;
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+.success-icon {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    background: rgba(11,13,16,.96);
+    border-top: 1px solid #292e36;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+    backdrop-filter: blur(14px);
+}
+
+.nav-item {
+    border: 0;
+    background: none;
+    color: #777e89;
+    font-size: 12px;
+    padding: 5px 0;
+}
+
+.nav-item.active {
+    color: #fff;
+}
+
+.nav-icon {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 3px;
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 95px;
+    transform: translateX(-50%);
+    background: #ffffff;
+    color: #111;
+    padding: 12px 18px;
+    border-radius: 14px;
+    font-weight: 650;
+    display: none;
+    z-index: 50;
+    max-width: 85%;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
     .app {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px 18px 100px;
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
+    h1 {
+        font-size: 36px;
     }
 
-    .logo {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: -1px;
+    .grid {
+        gap: 10px;
     }
 
-    .avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ffffff, #777777);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #111;
-      font-weight: 800;
+    .option-card {
+        padding: 17px;
+        min-height: 155px;
     }
 
-    .welcome {
-      margin-bottom: 25px;
+    .option-title {
+        font-size: 19px;
     }
-
-    .welcome h1 {
-      font-size: 28px;
-      margin: 0 0 8px;
-      letter-spacing: -0.5px;
-    }
-
-    .welcome p {
-      margin: 0;
-      color: #8e949e;
-      font-size: 15px;
-    }
-
-    .main-card {
-      background: linear-gradient(145deg, #191d23, #111419);
-      border: 1px solid #292e36;
-      border-radius: 24px;
-      padding: 22px;
-      margin-bottom: 20px;
-    }
-
-    .main-card h2 {
-      margin: 0 0 8px;
-      font-size: 21px;
-    }
-
-    .main-card p {
-      color: #949aa4;
-      font-size: 14px;
-      line-height: 1.5;
-      margin: 0 0 18px;
-    }
-
-    .ai-button {
-      width: 100%;
-      border: none;
-      border-radius: 15px;
-      padding: 15px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #ffffff;
-      background: #ffffff;
-      color: #111111;
-      cursor: pointer;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin: 25px 0 14px;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .action {
-      background: #15181d;
-      border: 1px solid #292e36;
-      border-radius: 19px;
-      padding: 20px 15px;
-      min-height: 125px;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-
-    .action:active {
-      transform: scale(0.97);
-    }
-
-    .icon {
-      font-size: 27px;
-      margin-bottom: 13px;
-    }
-
-    .action-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 5px;
-    }
-
-    .action-text {
-      color: #858b95;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .categories {
-      display: flex;
-      gap: 9px;
-      overflow-x: auto;
-      padding-bottom: 5px;
-      scrollbar-width: none;
-    }
-
-    .categories::-webkit-scrollbar {
-      display: none;
-    }
-
-    .category {
-      flex-shrink: 0;
-      background: #15181d;
-      border: 1px solid #292e36;
-      border-radius: 14px;
-      padding: 11px 14px;
-      font-size: 13px;
-      color: #d9dce1;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(600px, 100%);
-      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(11, 13, 16, 0.94);
-      backdrop-filter: blur(15px);
-      border-top: 1px solid #252930;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      z-index: 10;
-    }
-
-    .nav-item {
-      border: none;
-      background: none;
-      color: #777d87;
-      font-size: 11px;
-      padding: 7px 0;
-      cursor: pointer;
-    }
-
-    .nav-icon {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    .nav-item.active {
-      color: #ffffff;
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 90px;
-      transform: translateX(-50%) translateY(20px);
-      background: #ffffff;
-      color: #111111;
-      padding: 13px 18px;
-      border-radius: 14px;
-      font-size: 14px;
-      font-weight: 600;
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.25s;
-      z-index: 20;
-      white-space: nowrap;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <header class="header">
-      <div class="logo">TASKA</div>
-      <div class="avatar" id="avatar">T</div>
-    </header>
+    <!-- HOME -->
+    <section id="home" class="screen active">
 
-    <section class="welcome">
-      <h1>Что будем делать?</h1>
-      <p>Найди исполнителя или создай свой заказ.</p>
+        <div class="header">
+            <div class="logo">TASKA</div>
+            <div class="avatar" id="avatar">T</div>
+        </div>
+
+        <h1>Что будем делать?</h1>
+        <div class="subtitle">
+            Найди исполнителя или создай свой заказ.
+        </div>
+
+        <div class="card ai-card">
+            <div class="ai-title">🤖 TASKA AI</div>
+
+            <div class="ai-text">
+                Опиши задачу обычными словами — TASKA
+                поможет сформировать понятное техническое
+                задание и подготовить заказ.
+            </div>
+
+            <button class="primary" onclick="openCreate()">
+                Создать заказ с AI
+            </button>
+        </div>
+
+        <div class="section-title">Что вам нужно?</div>
+
+        <div class="grid">
+
+            <div class="option-card" onclick="showToast('Поиск исполнителей скоро будет доступен')">
+                <div class="option-icon">🔎</div>
+                <div class="option-title">Найти исполнителя</div>
+                <div class="option-text">
+                    Дизайнеры, SMM, разработчики и другие специалисты.
+                </div>
+            </div>
+
+            <div class="option-card" onclick="openCreate()">
+                <div class="option-icon">＋</div>
+                <div class="option-title">Создать заказ</div>
+                <div class="option-text">
+                    Опиши задачу и получи предложения специалистов.
+                </div>
+            </div>
+
+            <div class="option-card" onclick="showToast('Раздел заказов скоро будет доступен')">
+                <div class="option-icon">📦</div>
+                <div class="option-title">Мои заказы</div>
+                <div class="option-text">
+                    Все активные и завершённые заказы в одном месте.
+                </div>
+            </div>
+
+            <div class="option-card" onclick="showToast('Профиль скоро будет доступен')">
+                <div class="option-icon">👤</div>
+                <div class="option-title">Профиль</div>
+                <div class="option-text">
+                    Настройки, рейтинг и история работы.
+                </div>
+            </div>
+
+        </div>
     </section>
 
-    <section class="main-card">
-      <h2>🤖 TASKA AI</h2>
-      <p>
-        Опиши задачу обычными словами — TASKA поможет
-        сформировать понятное техническое задание
-        и подобрать подходящих исполнителей.
-      </p>
 
-      <button class="ai-button" onclick="createOrder()">
-        Создать заказ с AI
-      </button>
+    <!-- CREATE ORDER -->
+    <section id="create" class="screen">
+
+        <button class="back" onclick="showScreen('home')">
+            ← Назад
+        </button>
+
+        <div class="form-title">Создадим заказ</div>
+
+        <div class="form-subtitle">
+            Расскажи TASKA своими словами, что тебе нужно.
+            Мы подготовим понятное ТЗ.
+        </div>
+
+        <div class="card">
+
+            <label class="label">
+                Что вам нужно?
+            </label>
+
+            <textarea id="taskText"
+                placeholder="Например: нужен логотип для магазина мужской обуви. Хочу современный и строгий стиль, желательно чёрный цвет..."></textarea>
+
+            <label class="label">
+                Категория
+            </label>
+
+            <select id="category">
+                <option value="Дизайн">🎨 Дизайн</option>
+                <option value="SMM">📱 SMM</option>
+                <option value="Видео">🎬 Видео</option>
+                <option value="Разработка">💻 Разработка</option>
+                <option value="AI">🤖 AI</option>
+                <option value="Тексты">✍️ Тексты</option>
+                <option value="Другое">✨ Другое</option>
+            </select>
+
+            <div class="row">
+
+                <div>
+                    <label class="label">
+                        Бюджет
+                    </label>
+
+                    <input id="budget"
+                           type="number"
+                           placeholder="5000">
+                </div>
+
+                <div>
+                    <label class="label">
+                        Срок
+                    </label>
+
+                    <select id="deadline">
+                        <option>1–2 дня</option>
+                        <option>3–5 дней</option>
+                        <option>1 неделя</option>
+                        <option>2 недели</option>
+                        <option>Не знаю</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="primary" onclick="generateTask()">
+                🤖 Сформировать ТЗ
+            </button>
+
+        </div>
     </section>
 
-    <div class="section-title">Что вам нужно?</div>
 
-    <div class="actions">
+    <!-- AI LOADING -->
+    <section id="loading" class="screen">
 
-      <div class="action" onclick="findExecutor()">
-        <div class="icon">🔎</div>
-        <div class="action-title">Найти исполнителя</div>
-        <div class="action-text">
-          Дизайнеры, SMM, разработчики и другие специалисты.
+        <div class="card ai-loading">
+
+            <div class="robot">🤖</div>
+
+            <div class="loading-title">
+                TASKA анализирует задачу
+            </div>
+
+            <div class="loading-text">
+                Формируем техническое задание...
+            </div>
+
         </div>
-      </div>
 
-      <div class="action" onclick="createOrder()">
-        <div class="icon">➕</div>
-        <div class="action-title">Создать заказ</div>
-        <div class="action-text">
-          Опиши задачу и получи предложения специалистов.
+    </section>
+
+
+    <!-- RESULT -->
+    <section id="result" class="screen">
+
+        <button class="back" onclick="showScreen('create')">
+            ← Изменить
+        </button>
+
+        <div class="result-title">
+            ТЗ готово
         </div>
-      </div>
 
-      <div class="action" onclick="showMessage('Раздел заказов скоро будет доступен')">
-        <div class="icon">📦</div>
-        <div class="action-title">Мои заказы</div>
-        <div class="action-text">
-          Все активные и завершённые заказы в одном месте.
+        <div class="result-subtitle">
+            Проверь данные перед публикацией заказа.
         </div>
-      </div>
 
-      <div class="action" onclick="showMessage('Профиль скоро будет доступен')">
-        <div class="icon">👤</div>
-        <div class="action-title">Профиль</div>
-        <div class="action-text">
-          Рейтинг, отзывы, история и настройки аккаунта.
+        <div class="card">
+
+            <div class="success">
+                <div class="success-icon">✨</div>
+
+                <strong id="resultHeadline">
+                    Создание цифрового проекта
+                </strong>
+
+                <div style="color:#9298a2;margin-top:7px;line-height:1.5;"
+                     id="resultDescription">
+                </div>
+            </div>
+
+            <div class="spec">
+
+                <div class="spec-row">
+                    <div class="spec-name">Категория</div>
+                    <div class="spec-value" id="resultCategory"></div>
+                </div>
+
+                <div class="spec-row">
+                    <div class="spec-name">Бюджет</div>
+                    <div class="spec-value" id="resultBudget"></div>
+                </div>
+
+                <div class="spec-row">
+                    <div class="spec-name">Срок</div>
+                    <div class="spec-value" id="resultDeadline"></div>
+                </div>
+
+            </div>
+
+            <br>
+
+            <button class="primary" onclick="publishOrder()">
+                Опубликовать заказ
+            </button>
+
+            <br><br>
+
+            <button class="secondary" onclick="showScreen('create')">
+                Изменить заказ
+            </button>
+
         </div>
-      </div>
+    </section>
 
-    </div>
 
-    <div class="section-title">Популярные услуги</div>
+    <!-- PUBLISHED -->
+    <section id="published" class="screen">
 
-    <div class="categories">
-      <div class="category">🎨 Дизайн</div>
-      <div class="category">📱 SMM</div>
-      <div class="category">🎬 Видео</div>
-      <div class="category">🤖 AI</div>
-      <div class="category">💻 Разработка</div>
-      <div class="category">✍️ Тексты</div>
-    </div>
+        <div class="card" style="text-align:center;margin-top:40px;">
 
-  </div>
+            <div style="font-size:60px;">🚀</div>
 
-  <nav class="bottom-nav">
+            <div class="result-title" style="margin-top:15px;">
+                Заказ опубликован
+            </div>
 
-    <button class="nav-item active" onclick="setActive(this)">
-      <span class="nav-icon">⌂</span>
-      Главная
+            <div class="result-subtitle">
+                TASKA начнёт искать подходящих исполнителей.
+            </div>
+
+            <button class="primary" onclick="showScreen('home')">
+                Вернуться на главную
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+    <button class="nav-item active" onclick="showScreen('home')">
+        <span class="nav-icon">⌂</span>
+        Главная
     </button>
 
-    <button class="nav-item" onclick="showMessage('Заказы')">
-      <span class="nav-icon">📦</span>
-      Заказы
+    <button class="nav-item" onclick="showToast('Заказы скоро будут доступны')">
+        <span class="nav-icon">📦</span>
+        Заказы
     </button>
 
-    <button class="nav-item" onclick="showMessage('Сообщения')">
-      <span class="nav-icon">💬</span>
-      Чаты
+    <button class="nav-item" onclick="showToast('Чаты скоро будут доступны')">
+        <span class="nav-icon">💬</span>
+        Чаты
     </button>
 
-    <button class="nav-item" onclick="showMessage('Профиль')">
-      <span class="nav-icon">👤</span>
-      Профиль
+    <button class="nav-item" onclick="showToast('Профиль скоро будет доступен')">
+        <span class="nav-icon">👤</span>
+        Профиль
     </button>
 
-  </nav>
+</nav>
 
-  <div class="toast" id="toast"></div>
+<div id="toast" class="toast"></div>
 
-  <script>
 
-    // Telegram Mini App
-    const tg = window.Telegram?.WebApp;
+<script>
 
-    if (tg) {
-      tg.ready();
-      tg.expand();
+const tg = window.Telegram?.WebApp;
 
-      const user = tg.initDataUnsafe?.user;
+if (tg) {
+    tg.ready();
+    tg.expand();
+}
 
-      if (user) {
-        const firstLetter = (user.first_name || "T").charAt(0);
-        document.getElementById("avatar").textContent = firstLetter;
-      }
+const user = tg?.initDataUnsafe?.user;
+
+if (user) {
+    const firstLetter =
+        (user.first_name || "T").charAt(0).toUpperCase();
+
+    document.getElementById("avatar").textContent = firstLetter;
+}
+
+function showScreen(id) {
+
+    document.querySelectorAll(".screen")
+        .forEach(screen => screen.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function openCreate() {
+    showScreen("create");
+}
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 2500);
+}
+
+function generateTask() {
+
+    const text =
+        document.getElementById("taskText").value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    const budget =
+        document.getElementById("budget").value;
+
+    const deadline =
+        document.getElementById("deadline").value;
+
+    if (!text) {
+        showToast("Сначала опиши, что тебе нужно");
+        return;
     }
 
-    function showMessage(text) {
-      const toast = document.getElementById("toast");
+    showScreen("loading");
 
-      toast.textContent = text;
-      toast.classList.add("show");
+    setTimeout(() => {
 
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2000);
-    }
+        let title = "Создание проекта";
 
-    function createOrder() {
-      showMessage("Создание заказа подключим следующим шагом");
-    }
+        if (category === "Дизайн") {
+            title = "Создание дизайна";
+        }
 
-    function findExecutor() {
-      showMessage("Поиск исполнителя подключим следующим шагом");
-    }
+        if (category === "SMM") {
+            title = "SMM-задача";
+        }
 
-    function setActive(button) {
-      document.querySelectorAll(".nav-item")
-        .forEach(item => item.classList.remove("active"));
+        if (category === "Видео") {
+            title = "Создание видеоконтента";
+        }
 
-      button.classList.add("active");
-    }
+        if (category === "Разработка") {
+            title = "Разработка проекта";
+        }
 
-  </script>
+        if (category === "AI") {
+            title = "AI-проект";
+        }
+
+        if (category === "Тексты") {
+            title = "Создание текста";
+        }
+
+        document.getElementById("resultHeadline")
+            .textContent = title;
+
+        document.getElementById("resultDescription")
+            .textContent = text;
+
+        document.getElementById("resultCategory")
+            .textContent = category;
+
+        document.getElementById("resultBudget")
+            .textContent = budget
+                ? "до " + Number(budget).toLocaleString("ru-RU") + " ₽"
+                : "Не указан";
+
+        document.getElementById("resultDeadline")
+            .textContent = deadline;
+
+        showScreen("result");
+
+    }, 1200);
+}
+
+function publishOrder() {
+
+    showScreen("published");
+
+}
+
+</script>
 
 </body>
 </html>
