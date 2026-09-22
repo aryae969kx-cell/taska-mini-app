@@ -665,9 +665,76 @@ function createOrder() {
     tg.HapticFeedback?.notificationOccurred('success');
 }
 
-function generateTZ() {
+async function generateTZ() {
 
     const order = currentOrder;
+
+    try {
+
+        showToast('🤖 TASKA AI готовит ТЗ...');
+
+        const response = await fetch(
+            'https://taska-backend-e8og.onrender.com/api/create-tz',
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    title: order.title,
+                    description: order.description,
+                    category: order.category,
+                    budget: order.budget,
+                    deadline: order.deadline
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Server error');
+        }
+
+        const data = await response.json();
+
+        document.getElementById('tzTask').textContent =
+            data.tz.task;
+
+        document.getElementById('tzCategory').textContent =
+            data.tz.category;
+
+        document.getElementById('tzRequirements').textContent =
+            data.tz.requirements;
+
+        document.getElementById('tzBudget').textContent =
+            data.tz.budget;
+
+        document.getElementById('tzDeadline').textContent =
+            data.tz.deadline;
+
+    } catch (error) {
+
+        console.error(error);
+
+        showToast('Не удалось связаться с TASKA Backend');
+
+        document.getElementById('tzTask').textContent =
+            order.title;
+
+        document.getElementById('tzCategory').textContent =
+            order.category;
+
+        document.getElementById('tzRequirements').textContent =
+            order.description;
+
+        document.getElementById('tzBudget').textContent =
+            Number(order.budget).toLocaleString('ru-RU') + ' ₽';
+
+        document.getElementById('tzDeadline').textContent =
+            order.deadline;
+    }
+}
 
     document.getElementById('tzTask').textContent =
         order.title;
