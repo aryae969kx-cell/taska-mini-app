@@ -3,795 +3,541 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#080b12">
 <title>TASKA</title>
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #080b12;
-    color: #ffffff;
-}
-
-button, input, textarea, select {
-    font: inherit;
-}
-
-.app {
-    max-width: 600px;
-    margin: auto;
-    min-height: 100vh;
-    padding-bottom: 90px;
-}
-
-.header {
-    padding: 22px 20px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: 900;
-    letter-spacing: 1px;
-}
-
-.logo span {
-    color: #5b8cff;
-}
-
-.user-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #171d2a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.screen {
-    display: none;
-    padding: 10px 18px 25px;
-}
-
-.screen.active {
-    display: block;
-}
-
-.hero {
-    margin-top: 10px;
-    padding: 25px 20px;
-    border-radius: 24px;
-    background: linear-gradient(145deg, #111827, #0c111c);
-    border: 1px solid #1c2638;
-}
-
-.hero h1 {
-    margin: 0 0 10px;
-    font-size: 28px;
-}
-
-.hero p {
-    margin: 0;
-    color: #8d98aa;
-    line-height: 1.5;
-}
-
-.ai-card {
-    margin-top: 18px;
-    padding: 18px;
-    border-radius: 20px;
-    background: #101622;
-    border: 1px solid #202b3e;
-}
-
-.ai-title {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    font-weight: 700;
-}
-
-.ai-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: #172442;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
-
-.ai-card p {
-    color: #8d98aa;
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 12px 0 0;
-}
-
-.primary {
-    width: 100%;
-    border: 0;
-    padding: 16px;
-    border-radius: 16px;
-    background: #5b8cff;
-    color: white;
-    font-weight: 700;
-    font-size: 16px;
-    margin-top: 15px;
-}
-
-.secondary {
-    width: 100%;
-    border: 1px solid #263247;
-    padding: 15px;
-    border-radius: 16px;
-    background: #111722;
-    color: white;
-    font-weight: 600;
-    margin-top: 10px;
-}
-
-.section-title {
-    margin: 25px 0 12px;
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.categories {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.category {
-    padding: 16px;
-    border-radius: 16px;
-    background: #111722;
-    border: 1px solid #1e293b;
-    color: white;
-    text-align: left;
-}
-
-.category small {
-    display: block;
-    color: #778399;
-    margin-top: 5px;
-}
-
-.form-title {
-    font-size: 26px;
-    font-weight: 800;
-    margin: 10px 0 7px;
-}
-
-.form-subtitle {
-    color: #7e899b;
-    margin-bottom: 22px;
-}
-
-label {
-    display: block;
-    color: #a8b2c2;
-    font-size: 14px;
-    margin: 16px 0 7px;
-}
-
-input, textarea, select {
-    width: 100%;
-    background: #111722;
-    color: white;
-    border: 1px solid #253044;
-    border-radius: 14px;
-    padding: 15px;
-    outline: none;
-}
-
-textarea {
-    min-height: 125px;
-    resize: none;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: #5b8cff;
-}
-
-.ai-result {
-    background: linear-gradient(145deg, #111a2b, #0d131e);
-    border: 1px solid #263b5f;
-    border-radius: 22px;
-    padding: 20px;
-    margin-top: 18px;
-}
-
-.ai-result-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
-}
-
-.ai-result-icon {
-    width: 44px;
-    height: 44px;
-    background: #172a4c;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-}
-
-.ai-result-header strong {
-    display: block;
-}
-
-.ai-result-header span {
-    color: #6f9cff;
-    font-size: 13px;
-}
-
-.tz-row {
-    padding: 13px 0;
-    border-bottom: 1px solid #202c40;
-}
-
-.tz-row:last-child {
-    border-bottom: none;
-}
-
-.tz-label {
-    color: #718096;
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-
-.tz-value {
-    font-size: 15px;
-    line-height: 1.45;
-}
-
-.success {
-    color: #64d98b;
-}
-
-.orders-empty {
-    text-align: center;
-    padding: 70px 20px;
-    color: #778399;
-}
-
-.orders-empty .big {
-    font-size: 45px;
-    margin-bottom: 15px;
-}
-
-.bottom-nav {
-    position: fixed;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: min(600px, 100%);
-    background: rgba(10, 14, 22, 0.96);
-    border-top: 1px solid #1b2433;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 5px 14px;
-    backdrop-filter: blur(15px);
-    z-index: 20;
-}
-
-.nav-btn {
-    border: 0;
-    background: transparent;
-    color: #657084;
-    font-size: 11px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.nav-btn.active {
-    color: #6f9cff;
-}
-
-.nav-icon {
-    font-size: 21px;
-}
-
-.toast {
-    position: fixed;
-    left: 50%;
-    bottom: 90px;
-    transform: translateX(-50%) translateY(20px);
-    background: #1a2230;
-    border: 1px solid #2b3950;
-    padding: 13px 18px;
-    border-radius: 14px;
-    color: white;
-    opacity: 0;
-    pointer-events: none;
-    transition: .3s;
-    z-index: 100;
-    max-width: 90%;
-    text-align: center;
-}
-
-.toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#080b12;color:#fff}
+button,input,textarea,select{font:inherit}
+.app{max-width:600px;margin:auto;min-height:100vh;padding-bottom:92px}
+.header{padding:22px 20px 12px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px}
+.logo span{color:#5b8cff}
+.user-icon{width:38px;height:38px;border-radius:50%;background:#171d2a;display:flex;align-items:center;justify-content:center}
+.screen{display:none;padding:10px 18px 25px}
+.screen.active{display:block}
+.hero{margin-top:10px;padding:25px 20px;border-radius:24px;background:linear-gradient(145deg,#111827,#0c111c);border:1px solid #1c2638}
+.hero h1{margin:0 0 10px;font-size:28px}
+.hero p,.ai-card p{margin:0;color:#8d98aa;line-height:1.5}
+.ai-card{margin-top:18px;padding:18px;border-radius:20px;background:#101622;border:1px solid #202b3e}
+.ai-title{display:flex;gap:10px;align-items:center;font-weight:700}
+.ai-icon{width:38px;height:38px;border-radius:12px;background:#172442;display:flex;align-items:center;justify-content:center;font-size:20px}
+.ai-card p{font-size:14px;margin-top:12px}
+.primary,.secondary{width:100%;border:0;padding:16px;border-radius:16px;font-weight:700;margin-top:15px;cursor:pointer}
+.primary{background:#5b8cff;color:white;font-size:16px}
+.secondary{border:1px solid #263247;background:#111722;color:white;margin-top:10px}
+button:disabled{opacity:.55;cursor:wait}
+.section-title{margin:25px 0 12px;font-size:18px;font-weight:800}
+.categories{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.category{padding:16px;border-radius:16px;background:#111722;border:1px solid #1e293b;color:white;text-align:left;cursor:pointer}
+.category small{display:block;color:#778399;margin-top:5px}
+.form-title{font-size:26px;font-weight:800;margin:10px 0 7px}
+.form-subtitle{color:#7e899b;margin-bottom:22px;line-height:1.45}
+label{display:block;color:#a8b2c2;font-size:14px;margin:16px 0 7px}
+input,textarea,select{width:100%;background:#111722;color:white;border:1px solid #253044;border-radius:14px;padding:15px;outline:none}
+textarea{min-height:125px;resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:#5b8cff}
+.ai-result{background:linear-gradient(145deg,#111a2b,#0d131e);border:1px solid #263b5f;border-radius:22px;padding:20px;margin-top:18px}
+.ai-result-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.ai-result-icon{width:44px;height:44px;background:#172a4c;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.ai-result-header strong{display:block}
+.ai-result-header span{color:#6f9cff;font-size:13px}
+.tz-row{padding:13px 0;border-bottom:1px solid #202c40}
+.tz-row:last-child{border-bottom:none}
+.tz-label{color:#718096;font-size:12px;margin-bottom:5px}
+.tz-value{font-size:15px;line-height:1.45;overflow-wrap:anywhere}
+.success{color:#64d98b}
+.orders-empty{text-align:center;padding:55px 20px;color:#778399}
+.orders-empty .big{font-size:45px;margin-bottom:15px}
+.order-card{padding:16px;margin-top:12px;border:1px solid #263247;background:#111722;border-radius:16px}
+.order-card h3{margin:0 0 8px;font-size:17px}
+.muted{color:#8d98aa;font-size:13px;line-height:1.5}
+.bottom-nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(600px,100%);background:rgba(10,14,22,.96);border-top:1px solid #1b2433;display:flex;justify-content:space-around;padding:10px 5px 14px;backdrop-filter:blur(15px);z-index:20}
+.nav-btn{border:0;background:transparent;color:#657084;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.nav-btn.active{color:#6f9cff}
+.nav-icon{font-size:21px}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#1a2230;border:1px solid #2b3950;padding:13px 18px;border-radius:14px;color:white;opacity:0;pointer-events:none;transition:.3s;z-index:100;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
 <header class="header">
-    <div class="logo">TAS<span>KA</span></div>
-    <div class="user-icon">👤</div>
+  <div class="logo">TAS<span>KA</span></div>
+  <div class="user-icon">👤</div>
 </header>
 
-<!-- HOME -->
 <section id="home" class="screen active">
+  <div class="hero">
+    <h1>Добро пожаловать в TASKA</h1>
+    <p>Найди специалиста или создай заказ. TASKA поможет превратить твою идею в понятное задание.</p>
+  </div>
 
-    <div class="hero">
-        <h1>Добро пожаловать в TASKA</h1>
-        <p>
-            Найди специалиста или создай заказ.
-            TASKA поможет превратить твою идею в понятное задание.
-        </p>
+  <div class="ai-card">
+    <div class="ai-title">
+      <div class="ai-icon">🤖</div>
+      <div>TASKA AI</div>
     </div>
+    <p>Опиши своими словами, что тебе нужно. AI структурирует задачу и поможет подготовить задание для исполнителя.</p>
+    <button class="primary" onclick="openCreateOrder()">＋ Создать заказ</button>
+    <button class="secondary" onclick="showScreen('orders')">🔎 Мои заказы</button>
+  </div>
 
-    <div class="ai-card">
-        <div class="ai-title">
-            <div class="ai-icon">🤖</div>
-            <div>TASKA AI</div>
-        </div>
-
-        <p>
-            Опиши своими словами, что тебе нужно.
-            AI структурирует задачу и поможет найти подходящего исполнителя.
-        </p>
-
-        <button class="primary" onclick="openCreateOrder()">
-            ＋ Создать заказ
-        </button>
-
-        <button class="secondary" onclick="showScreen('orders')">
-            🔎 Найти исполнителя
-        </button>
-    </div>
-
-    <div class="section-title">Популярные услуги</div>
-
-    <div class="categories">
-        <button class="category" onclick="openCreateOrder('Design')">
-            🎨 Дизайн
-            <small>Логотипы, баннеры</small>
-        </button>
-
-        <button class="category" onclick="openCreateOrder('SMM')">
-            📱 SMM
-            <small>Соцсети, контент</small>
-        </button>
-
-        <button class="category" onclick="openCreateOrder('Video')">
-            🎬 Видео
-            <small>Монтаж, Reels</small>
-        </button>
-
-        <button class="category" onclick="openCreateOrder('AI')">
-            🤖 AI
-            <small>Изображения, видео</small>
-        </button>
-
-        <button class="category" onclick="openCreateOrder('Development')">
-            💻 Разработка
-            <small>Сайты, боты</small>
-        </button>
-
-        <button class="category" onclick="openCreateOrder('Texts')">
-            ✍️ Тексты
-            <small>Статьи, копирайтинг</small>
-        </button>
-    </div>
-
+  <div class="section-title">Популярные услуги</div>
+  <div class="categories">
+    <button class="category" onclick="openCreateOrder('Design')">🎨 Дизайн<small>Логотипы, баннеры</small></button>
+    <button class="category" onclick="openCreateOrder('SMM')">📱 SMM<small>Соцсети, контент</small></button>
+    <button class="category" onclick="openCreateOrder('Video')">🎬 Видео<small>Монтаж, Reels</small></button>
+    <button class="category" onclick="openCreateOrder('AI')">🤖 AI<small>Изображения, видео</small></button>
+    <button class="category" onclick="openCreateOrder('Development')">💻 Разработка<small>Сайты, боты</small></button>
+    <button class="category" onclick="openCreateOrder('Texts')">✍️ Тексты<small>Статьи, копирайтинг</small></button>
+  </div>
 </section>
 
-<!-- CREATE ORDER -->
 <section id="create" class="screen">
+  <div class="form-title">Создать заказ</div>
+  <div class="form-subtitle">Расскажи, что тебе нужно — TASKA подготовит техническое задание.</div>
 
-    <div class="form-title">Создать заказ</div>
-    <div class="form-subtitle">
-        Расскажи, что тебе нужно — TASKA подготовит ТЗ.
-    </div>
+  <label for="category">Категория</label>
+  <select id="category">
+    <option value="">Выбери категорию</option>
+    <option value="Design">Дизайн</option>
+    <option value="SMM">SMM</option>
+    <option value="Video">Видео</option>
+    <option value="AI">AI</option>
+    <option value="Development">Разработка</option>
+    <option value="Texts">Тексты</option>
+    <option value="Photo">Фото</option>
+    <option value="Other">Другое</option>
+  </select>
 
-    <label>Категория</label>
-    <select id="category">
-        <option value="">Выбери категорию</option>
-        <option>Design</option>
-        <option>SMM</option>
-        <option>Video</option>
-        <option>AI</option>
-        <option>Development</option>
-        <option>Texts</option>
-        <option>Photo</option>
-        <option>Other</option>
-    </select>
+  <label for="title">Название заказа</label>
+  <input id="title" maxlength="120" placeholder="Например: Логотип для магазина">
 
-    <label>Название заказа</label>
-    <input id="title" placeholder="Например: Логотип для магазина">
+  <label for="description">Что тебе нужно?</label>
+  <textarea id="description" maxlength="3000" placeholder="Опиши задачу своими словами. Можно без специальных терминов..."></textarea>
 
-    <label>Что тебе нужно?</label>
-    <textarea id="description"
-        placeholder="Опиши задачу своими словами. Можно без специальных терминов..."></textarea>
+  <label for="budget">Бюджет, ₽</label>
+  <input id="budget" type="number" min="1" step="1" placeholder="Например: 5000">
 
-    <label>Бюджет</label>
-    <input id="budget" type="number" placeholder="Например: 5000">
+  <label for="deadline">Срок</label>
+  <select id="deadline">
+    <option value="">Выбери срок</option>
+    <option>До 1 дня</option>
+    <option>До 3 дней</option>
+    <option>До 7 дней</option>
+    <option>До 14 дней</option>
+    <option>До 30 дней</option>
+  </select>
 
-    <label>Срок</label>
-    <select id="deadline">
-        <option value="">Выбери срок</option>
-        <option>До 1 дня</option>
-        <option>До 3 дней</option>
-        <option>До 7 дней</option>
-        <option>До 14 дней</option>
-        <option>До 30 дней</option>
-    </select>
-
-    <button class="primary" onclick="createOrder()">
-        🤖 Подготовить ТЗ
-    </button>
-
+  <button class="primary" id="prepareBtn" onclick="createOrder()">🤖 Подготовить ТЗ</button>
+  <button class="secondary" onclick="showScreen('home')">Назад</button>
 </section>
 
-<!-- AI TZ -->
 <section id="tz" class="screen">
+  <div class="form-title">Твоё ТЗ готово</div>
+  <div class="form-subtitle">Проверь данные перед сохранением заказа.</div>
 
-    <div class="form-title">Твоё ТЗ готово</div>
-
-    <div class="form-subtitle">
-        TASKA структурировала описание заказа.
-        Проверь данные перед публикацией.
+  <div class="ai-result">
+    <div class="ai-result-header">
+      <div class="ai-result-icon">🤖</div>
+      <div>
+        <strong>TASKA AI</strong>
+        <span>Техническое задание</span>
+      </div>
     </div>
 
-    <div class="ai-result">
-
-        <div class="ai-result-header">
-            <div class="ai-result-icon">🤖</div>
-            <div>
-                <strong>TASKA AI</strong>
-                <span>Техническое задание</span>
-            </div>
-        </div>
-
-        <div class="tz-row">
-            <div class="tz-label">ЗАДАЧА</div>
-            <div class="tz-value" id="tzTask">—</div>
-        </div>
-
-        <div class="tz-row">
-            <div class="tz-label">КАТЕГОРИЯ</div>
-            <div class="tz-value" id="tzCategory">—</div>
-        </div>
-
-        <div class="tz-row">
-            <div class="tz-label">ТРЕБОВАНИЯ</div>
-            <div class="tz-value" id="tzRequirements">—</div>
-        </div>
-
-        <div class="tz-row">
-            <div class="tz-label">БЮДЖЕТ</div>
-            <div class="tz-value" id="tzBudget">—</div>
-        </div>
-
-        <div class="tz-row">
-            <div class="tz-label">СРОК</div>
-            <div class="tz-value" id="tzDeadline">—</div>
-        </div>
-
-        <div class="tz-row">
-            <div class="tz-label">СТАТУС</div>
-            <div class="tz-value success">
-                ✓ ТЗ подготовлено
-            </div>
-        </div>
-
+    <div class="tz-row">
+      <div class="tz-label">ЗАДАЧА</div>
+      <div class="tz-value" id="tzTask">—</div>
     </div>
+    <div class="tz-row">
+      <div class="tz-label">КАТЕГОРИЯ</div>
+      <div class="tz-value" id="tzCategory">—</div>
+    </div>
+    <div class="tz-row">
+      <div class="tz-label">ТРЕБОВАНИЯ</div>
+      <div class="tz-value" id="tzRequirements">—</div>
+    </div>
+    <div class="tz-row">
+      <div class="tz-label">БЮДЖЕТ</div>
+      <div class="tz-value" id="tzBudget">—</div>
+    </div>
+    <div class="tz-row">
+      <div class="tz-label">СРОК</div>
+      <div class="tz-value" id="tzDeadline">—</div>
+    </div>
+    <div class="tz-row">
+      <div class="tz-label">СТАТУС</div>
+      <div class="tz-value success" id="tzStatus">✓ ТЗ подготовлено</div>
+    </div>
+  </div>
 
-    <button class="primary" onclick="confirmOrder()">
-        ✓ Всё верно
-    </button>
-
-    <button class="secondary" onclick="showScreen('create')">
-        ✏️ Изменить
-    </button>
-
+  <p class="muted">На этом этапе заказ сохраняется в приложении на этом устройстве. Он ещё не опубликован для исполнителей.</p>
+  <button class="primary" onclick="confirmOrder()">✓ Сохранить заказ</button>
+  <button class="secondary" onclick="showScreen('create')">✏️ Изменить</button>
 </section>
 
-<!-- ORDERS -->
 <section id="orders" class="screen">
-
-    <div class="form-title">Мои заказы</div>
-
-    <div class="orders-empty">
-        <div class="big">📋</div>
-        <div>Пока здесь нет заказов</div>
-    </div>
-
+  <div class="form-title">Мои заказы</div>
+  <div id="ordersList"></div>
 </section>
 
-<!-- CHATS -->
 <section id="chats" class="screen">
-
-    <div class="form-title">Чаты</div>
-
-    <div class="orders-empty">
-        <div class="big">💬</div>
-        <div>Здесь появятся ваши чаты</div>
-    </div>
-
+  <div class="form-title">Чаты</div>
+  <div class="orders-empty">
+    <div class="big">💬</div>
+    <div>Чаты появятся после подключения исполнителей.</div>
+  </div>
 </section>
 
-<!-- PROFILE -->
 <section id="profile" class="screen">
-
-    <div class="form-title">Профиль</div>
-
-    <div class="ai-card">
-        <div class="ai-title">
-            👤 <span id="profileName">Пользователь TASKA</span>
-        </div>
-
-        <p>
-            Здесь будут профиль, рейтинг, история заказов
-            и настройки аккаунта.
-        </p>
-    </div>
-
+  <div class="form-title">Профиль</div>
+  <div class="ai-card">
+    <div class="ai-title">👤 <span id="profileName">Пользователь TASKA</span></div>
+    <p>Здесь будут профиль, рейтинг, история заказов и настройки аккаунта.</p>
+  </div>
 </section>
 
 </div>
 
-<!-- NAVIGATION -->
-
 <nav class="bottom-nav">
-
-    <button class="nav-btn active" onclick="showScreen('home', this)">
-        <div class="nav-icon">⌂</div>
-        Главная
-    </button>
-
-    <button class="nav-btn" onclick="showScreen('orders', this)">
-        <div class="nav-icon">📋</div>
-        Заказы
-    </button>
-
-    <button class="nav-btn" onclick="showScreen('chats', this)">
-        <div class="nav-icon">💬</div>
-        Чаты
-    </button>
-
-    <button class="nav-btn" onclick="showScreen('profile', this)">
-        <div class="nav-icon">👤</div>
-        Профиль
-    </button>
-
+  <button class="nav-btn active" onclick="showScreen('home',this)"><div class="nav-icon">⌂</div>Главная</button>
+  <button class="nav-btn" onclick="showScreen('orders',this)"><div class="nav-icon">📋</div>Заказы</button>
+  <button class="nav-btn" onclick="showScreen('chats',this)"><div class="nav-icon">💬</div>Чаты</button>
+  <button class="nav-btn" onclick="showScreen('profile',this)"><div class="nav-icon">👤</div>Профиль</button>
 </nav>
 
-<div id="toast" class="toast"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
+'use strict';
 
-const tg = window.Telegram.WebApp;
+const tg = window.Telegram && window.Telegram.WebApp
+  ? window.Telegram.WebApp
+  : null;
 
-tg.ready();
-tg.expand();
+if (tg) {
+  try {
+    tg.ready();
+    tg.expand();
+  } catch (error) {
+    console.warn('Telegram WebApp init:', error);
+  }
+}
 
-let currentOrder = {};
+let currentOrder = null;
+const STORAGE_KEY = 'taska_orders_v1';
 
 function showScreen(id, button) {
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.toggle('active', screen.id === id);
+  });
 
-    document.querySelectorAll('.screen').forEach(screen => {
-        screen.classList.remove('active');
-    });
+  document.querySelectorAll('.nav-btn').forEach(navButton => {
+    navButton.classList.remove('active');
+  });
 
-    const screen = document.getElementById(id);
+  if (button) {
+    button.classList.add('active');
+  } else {
+    const map = {home: 0, orders: 1, chats: 2, profile: 3};
+    const nav = document.querySelectorAll('.nav-btn');
 
-    if (screen) {
-        screen.classList.add('active');
+    if (map[id] !== undefined && nav[map[id]]) {
+      nav[map[id]].classList.add('active');
     }
+  }
 
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+  if (id === 'orders') {
+    renderOrders();
+  }
 
-    if (button) {
-        button.classList.add('active');
-    }
-
-    window.scrollTo(0, 0);
+  window.scrollTo({top: 0, behavior: 'auto'});
 }
 
 function openCreateOrder(category) {
+  showScreen('create');
 
-    showScreen('create');
-
-    if (category) {
-        document.getElementById('category').value = category;
-    }
-}
-
-function createOrder() {
-
-    const category = document.getElementById('category').value;
-    const title = document.getElementById('title').value.trim();
-    const description = document.getElementById('description').value.trim();
-    const budget = document.getElementById('budget').value;
-    const deadline = document.getElementById('deadline').value;
-
-    if (!category || !title || !description || !budget || !deadline) {
-        showToast('Заполни все поля');
-        return;
-    }
-
-    currentOrder = {
-        category,
-        title,
-        description,
-        budget,
-        deadline
-    };
-
-    generateTZ();
-
-    showScreen('tz');
-
-    tg.HapticFeedback?.notificationOccurred('success');
-}
-
-async function generateTZ() {
-
-    const order = currentOrder;
-
-    try {
-
-        showToast('🤖 TASKA AI готовит ТЗ...');
-
-        const response = await fetch(
-            'https://taska-backend-e8og.onrender.com/api/create-tz',
-            {
-                method: 'POST',
-
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-
-                body: JSON.stringify({
-                    title: order.title,
-                    description: order.description,
-                    category: order.category,
-                    budget: order.budget,
-                    deadline: order.deadline
-                })
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error('Server error');
-        }
-
-        const data = await response.json();
-
-        document.getElementById('tzTask').textContent =
-            data.tz.task;
-
-        document.getElementById('tzCategory').textContent =
-            data.tz.category;
-
-        document.getElementById('tzRequirements').textContent =
-            data.tz.requirements;
-
-        document.getElementById('tzBudget').textContent =
-            data.tz.budget;
-
-        document.getElementById('tzDeadline').textContent =
-            data.tz.deadline;
-
-    } catch (error) {
-
-        console.error(error);
-
-        showToast('Не удалось связаться с TASKA Backend');
-
-        document.getElementById('tzTask').textContent =
-            order.title;
-
-        document.getElementById('tzCategory').textContent =
-            order.category;
-
-        document.getElementById('tzRequirements').textContent =
-            order.description;
-
-        document.getElementById('tzBudget').textContent =
-            Number(order.budget).toLocaleString('ru-RU') + ' ₽';
-
-        document.getElementById('tzDeadline').textContent =
-            order.deadline;
-    }
-}
-
-    document.getElementById('tzTask').textContent =
-        order.title;
-
-    document.getElementById('tzCategory').textContent =
-        order.category;
-
-    document.getElementById('tzRequirements').textContent =
-        order.description;
-
-    document.getElementById('tzBudget').textContent =
-        Number(order.budget).toLocaleString('ru-RU') + ' ₽';
-
-    document.getElementById('tzDeadline').textContent =
-        order.deadline;
-}
-
-function confirmOrder() {
-
-    showToast('✓ ТЗ подтверждено');
-
-    setTimeout(() => {
-
-        showScreen('orders');
-
-        showToast('Заказ готов к публикации');
-
-    }, 1000);
+  if (category) {
+    document.getElementById('category').value = category;
+  }
 }
 
 function showToast(message) {
+  const toast = document.getElementById('toast');
 
-    const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
 
-    toast.textContent = message;
-    toast.classList.add('show');
+  clearTimeout(showToast.timer);
 
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 2500);
+  showToast.timer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2800);
 }
 
-/* Telegram user */
+function money(value) {
+  return Number(value).toLocaleString('ru-RU') + ' ₽';
+}
 
-const user = tg.initDataUnsafe?.user;
+function setTZ(order, status) {
+  document.getElementById('tzTask').textContent = order.title || '—';
+
+  document.getElementById('tzCategory').textContent =
+    order.categoryLabel || order.category || '—';
+
+  document.getElementById('tzRequirements').textContent =
+    order.requirements || order.description || '—';
+
+  document.getElementById('tzBudget').textContent =
+    order.budgetText || money(order.budget);
+
+  document.getElementById('tzDeadline').textContent =
+    order.deadlineText || order.deadline || '—';
+
+  document.getElementById('tzStatus').textContent =
+    status || '✓ ТЗ подготовлено';
+}
+
+async function createOrder() {
+  const categoryEl = document.getElementById('category');
+  const category = categoryEl.value;
+  const title = document.getElementById('title').value.trim();
+  const description = document.getElementById('description').value.trim();
+  const budgetRaw = document.getElementById('budget').value.trim();
+  const budget = Number(budgetRaw);
+  const deadline = document.getElementById('deadline').value;
+
+  if (!category || !title || !description || !budgetRaw || !deadline) {
+    showToast('Заполни все поля');
+    return;
+  }
+
+  if (!Number.isFinite(budget) || budget <= 0) {
+    showToast('Укажи бюджет больше нуля');
+    return;
+  }
+
+  currentOrder = {
+    id: (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : String(Date.now()),
+    category,
+    categoryLabel: categoryEl.options[categoryEl.selectedIndex].text,
+    title,
+    description,
+    requirements: description,
+    budget,
+    deadline,
+    createdAt: new Date().toISOString(),
+    status: 'Черновик'
+  };
+
+  setTZ(currentOrder, 'Подготавливаем техническое задание…');
+  showScreen('tz');
+
+  const btn = document.getElementById('prepareBtn');
+  btn.disabled = true;
+
+  let timer;
+
+  try {
+    const controller = new AbortController();
+
+    timer = setTimeout(() => controller.abort(), 12000);
+
+    const response = await fetch(
+      'https://taska-backend-e8og.onrender.com/api/create-tz',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          title,
+          description,
+          category,
+          budget: String(budget),
+          deadline
+        }),
+        signal: controller.signal
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Backend HTTP ' + response.status);
+    }
+
+    const data = await response.json();
+
+    if (!data || !data.tz) {
+      throw new Error('Unexpected backend response');
+    }
+
+    currentOrder.requirements =
+      data.tz.requirements || description;
+
+    currentOrder.title =
+      data.tz.task || title;
+
+    currentOrder.categoryLabel =
+      data.tz.category || currentOrder.categoryLabel;
+
+    currentOrder.budgetText =
+      data.tz.budget || money(budget);
+
+    currentOrder.deadlineText =
+      data.tz.deadline || deadline;
+
+    setTZ(currentOrder, '✓ ТЗ подготовлено');
+
+    if (tg && tg.HapticFeedback) {
+      tg.HapticFeedback.notificationOccurred('success');
+    }
+
+  } catch (error) {
+    console.warn(
+      'TASKA AI unavailable; using entered details.',
+      error
+    );
+
+    setTZ(
+      currentOrder,
+      '✓ ТЗ подготовлено из твоего описания'
+    );
+
+    showToast('AI сейчас недоступен — использованы твои данные');
+
+  } finally {
+    clearTimeout(timer);
+    btn.disabled = false;
+  }
+}
+
+function readOrders() {
+  try {
+    const parsed = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || '[]'
+    );
+
+    return Array.isArray(parsed) ? parsed : [];
+
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveOrders(orders) {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(orders)
+    );
+
+    return true;
+
+  } catch (error) {
+    showToast('Не удалось сохранить на этом устройстве');
+    return false;
+  }
+}
+
+function confirmOrder() {
+  if (!currentOrder) {
+    showToast('Сначала подготовь заказ');
+    return;
+  }
+
+  const orders = readOrders();
+
+  if (!orders.some(order => order.id === currentOrder.id)) {
+    orders.unshift({
+      ...currentOrder,
+      status: 'Сохранён локально'
+    });
+  }
+
+  if (!saveOrders(orders)) {
+    return;
+  }
+
+  currentOrder = null;
+
+  renderOrders();
+  showScreen('orders');
+
+  showToast('Заказ сохранён на этом устройстве');
+}
+
+function renderOrders() {
+  const list = document.getElementById('ordersList');
+  const orders = readOrders();
+
+  if (!orders.length) {
+    list.innerHTML = `
+      <div class="orders-empty">
+        <div class="big">📋</div>
+        <div>Пока здесь нет заказов</div>
+        <button class="primary" onclick="openCreateOrder()">
+          ＋ Создать заказ
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  list.replaceChildren();
+
+  orders.forEach(order => {
+    const card = document.createElement('article');
+    card.className = 'order-card';
+
+    const title = document.createElement('h3');
+    title.textContent = order.title || 'Заказ';
+
+    const category = document.createElement('div');
+    category.className = 'muted';
+    category.textContent =
+      (order.categoryLabel || order.category || 'Без категории') +
+      ' · ' + money(order.budget);
+
+    const description = document.createElement('p');
+    description.className = 'muted';
+    description.textContent =
+      order.description || order.requirements || '';
+
+    const status = document.createElement('div');
+    status.className = 'muted';
+    status.textContent =
+      'Статус: ' + (order.status || 'Черновик') +
+      ' · ' + (order.deadline || 'срок не указан');
+
+    card.append(title, category, description, status);
+    list.append(card);
+  });
+
+  const note = document.createElement('p');
+  note.className = 'muted';
+  note.textContent =
+    'Заказы пока хранятся только в этом приложении на этом устройстве. ' +
+    'Публикация для исполнителей ещё не подключена.';
+
+  list.append(note);
+}
+
+const user = tg && tg.initDataUnsafe
+  ? tg.initDataUnsafe.user
+  : null;
 
 if (user) {
-
-    const name =
-        user.first_name ||
-        'Пользователь';
-
-    document.getElementById('profileName').textContent =
-        name;
+  document.getElementById('profileName').textContent =
+    user.first_name || 'Пользователь';
 }
 
+renderOrders();
 </script>
-
 </body>
 </html>
