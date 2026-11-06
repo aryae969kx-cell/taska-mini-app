@@ -452,7 +452,16 @@ function confirmOrder() {
     showToast('Сначала подготовь заказ');
     return;
   }
+  const editedRequirements =
+    document.getElementById('tzRequirements').value.trim();
 
+  if (!editedRequirements) {
+    showToast('Заполни техническое задание');
+    return;
+  }
+
+  currentOrder.requirements = editedRequirements;
+  currentOrder.description = editedRequirements;
   const orders = readOrders();
 
   if (!orders.some(order => order.id === currentOrder.id)) {
