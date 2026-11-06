@@ -293,7 +293,7 @@ function setTZ(order, status) {
   document.getElementById('tzCategory').textContent =
     order.categoryLabel || order.category || '—';
 
-  document.getElementById('tzRequirements').textContent =
+  document.getElementById('tzRequirements').value =
     order.requirements || order.description || '—';
 
   document.getElementById('tzBudget').textContent =
